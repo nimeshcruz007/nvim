@@ -37,16 +37,23 @@ require("mason-lspconfig").setup_handlers {
             }
         }
     end,
-    -- ["emmet_ls"] = function()
-    --     require("lspconfig").emmet_ls.setup {
-    --         filetypes = { "html", "css", "javascriptreact", "typescriptreact" },
-    --         init_options = {
-    --             html = {
-    --                 options = {
-    --                     ["autoClosingTags"] = true,
-    --                 }
-    --             }
-    --         }
-    --     }
-    -- end,
+
+    ["cssls"] = function()
+        local lspconfig = require("lspconfig")
+        lspconfig.cssls.setup {
+            -- on_attach = on_attach,
+            capabilities = capabilities,
+            -- settings = {
+            --     css = {
+            --         validate = true,
+            --     },
+            --     scss = {
+            --         validate = true,
+            --     },
+            --     less = {
+            --         validate = true,
+            --     },
+            -- }
+        }
+    end,
 }
