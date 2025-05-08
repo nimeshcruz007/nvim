@@ -38,4 +38,3 @@ vim.o.swapfile = false
 vim.g.netrw_keepdir = 0
 
 vim.cmd("colorscheme kanagawa-wave")
-

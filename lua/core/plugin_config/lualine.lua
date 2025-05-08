@@ -1,7 +1,6 @@
 require('lualine').setup {
     options = {
         icons_enabled = true,
-        theme = 'catppuccin',
         always_show_tabline = false
     },
     sections = {
