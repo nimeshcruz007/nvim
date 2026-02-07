@@ -17,23 +17,12 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
+
+
 -- Setup lazy.nvim
 require("lazy").setup({
     {
         "rebelot/kanagawa.nvim"
-    },
-    {
-        "github/copilot.vim"
-    },
-    {
-        "CopilotC-Nvim/CopilotChat.nvim",
-        dependencies = {
-            { "nvim-lua/plenary.nvim", branch = "master" },
-        },
-        build = "make tiktoken",
-        opts = {
-            -- See Configuration section for options
-        },
     },
     {
         "nvim-tree/nvim-tree.lua"
@@ -51,23 +40,32 @@ require("lazy").setup({
         "tpope/vim-surround"
     },
     {
-        "hrsh7th/nvim-cmp"
-    },
-    {
-        "hrsh7th/cmp-path"
-    },
-    {
-        "hrsh7th/cmp-nvim-lsp"
-    },
-    {
+        'saghen/blink.cmp',
+        dependencies = { 'rafamadriz/friendly-snippets' },
 
-        dependencies = {
-            "rafamadriz/friendly-snippets",
+        version = '1.*',
+
+        opts = {
+            keymap = { preset = 'default' },
+
+            appearance = {
+                nerd_font_variant = 'mono'
+            },
+
+            completion = { documentation = { auto_show = true } },
+
+            sources = {
+                default = { 'lsp', 'path', 'snippets', 'buffer' },
+            },
+
+            fuzzy = { implementation = "prefer_rust_with_warning" }
         },
-        "L3MON4D3/LuaSnip",
-        config = function()
-            require("luasnip.loaders.from_vscode").lazy_load()
-        end,
+        opts_extend = { "sources.default" }
+    },
+    {
+        "windwp/nvim-autopairs",
+        event = "InsertEnter",
+        config = true
     },
     {
         "windwp/nvim-ts-autotag",
@@ -83,12 +81,6 @@ require("lazy").setup({
         end
     },
     {
-        "saadparwaiz1/cmp_luasnip"
-    },
-    {
-        "rafamadriz/friendly-snippets"
-    },
-    {
         "stevearc/conform.nvim"
     },
     {
@@ -96,11 +88,22 @@ require("lazy").setup({
     },
     {
         "neovim/nvim-lspconfig",
-        "williamboman/mason.nvim",
-        "williamboman/mason-lspconfig.nvim",
     },
     {
-
+        "williamboman/mason.nvim",
+        config = function()
+            require("mason").setup()
+        end
+    },
+    {
+        "williamboman/mason-lspconfig.nvim",
+        dependencies = { "mason.nvim" },
+        config = function()
+            require("mason-lspconfig").setup()
+            -- require("mason-lspconfig").setup_handlers({})
+        end
+    },
+    {
         "nvim-telescope/telescope.nvim",
         tag = "0.1.4",
         requires = { { "nvim-lua/plenary.nvim" } },
@@ -110,9 +113,5 @@ require("lazy").setup({
     },
 
 
-    -- Configure any other settings here. See the documentation for more details.
-    -- colorscheme that will be used when installing plugins.
-    -- install = { colorscheme = { "habamax" } },
-    -- automatically check for plugin updates
     checker = { enabled = true },
 })
