@@ -1,3 +1,1 @@
-- #  - for backward search
-- * - for forward search 
-
+#  My Neovim Configuration 
