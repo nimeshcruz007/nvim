@@ -4,6 +4,7 @@ require("luasnip.loaders.from_vscode").lazy_load()
 
 cmp.setup({
     mapping = cmp.mapping.preset.insert({
+        ['<C-Space>'] = cmp.mapping.complete(),
         ['<C-y>'] = cmp.mapping.confirm({ select = true }),
         ['<C-e>'] = cmp.mapping.abort(),
         ['<C-u>'] = cmp.mapping.select_prev_item({ behavior = 'insert' }),

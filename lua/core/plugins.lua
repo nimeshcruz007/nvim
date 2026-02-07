@@ -1,43 +1,77 @@
-local ensure_packer = function()
-    local fn = vim.fn
-    local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-    if fn.empty(fn.glob(install_path)) > 0 then
-        fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path })
-        vim.cmd([[packadd packer.nvim]])
-        return true
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+    local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+    local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+    if vim.v.shell_error ~= 0 then
+        vim.api.nvim_echo({
+            { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+            { out,                            "WarningMsg" },
+            { "\nPress any key to exit..." },
+        }, true, {})
+        vim.fn.getchar()
+        os.exit(1)
     end
-    return false
 end
+vim.opt.rtp:prepend(lazypath)
 
-local packer_bootstrap = ensure_packer()
+vim.g.mapleader = " "
+vim.g.maplocalleader = "\\"
 
+-- Setup lazy.nvim
+require("lazy").setup({
+    {
+        "rebelot/kanagawa.nvim"
+    },
+    {
+        "github/copilot.vim"
+    },
+    {
+        "CopilotC-Nvim/CopilotChat.nvim",
+        dependencies = {
+            { "nvim-lua/plenary.nvim", branch = "master" },
+        },
+        build = "make tiktoken",
+        opts = {
+            -- See Configuration section for options
+        },
+    },
+    {
+        "nvim-tree/nvim-tree.lua"
+    },
+    {
+        "nvim-tree/nvim-web-devicons"
+    },
+    {
+        "nvim-lualine/lualine.nvim"
+    },
+    {
+        "nvim-treesitter/nvim-treesitter"
+    },
+    {
+        "tpope/vim-surround"
+    },
+    {
+        "hrsh7th/nvim-cmp"
+    },
+    {
+        "hrsh7th/cmp-path"
+    },
+    {
+        "hrsh7th/cmp-nvim-lsp"
+    },
+    {
 
-return require("packer").startup(function(use)
-    use("wbthomason/packer.nvim")
-    use("rebelot/kanagawa.nvim")
-    use("nvim-tree/nvim-tree.lua")
-    use("nvim-tree/nvim-web-devicons")
-    use("nvim-lualine/lualine.nvim")
-    use("nvim-treesitter/nvim-treesitter")
-    use("tpope/vim-surround")
-    use({
-        "nvim-treesitter/nvim-treesitter-textobjects",
-        after = "nvim-treesitter",
-        requires = "nvim-treesitter/nvim-treesitter",
-    })
-    --completion
-    use("hrsh7th/nvim-cmp")
-    use("hrsh7th/cmp-path")
-    use("hrsh7th/cmp-nvim-lsp")
-    use({
+        dependencies = {
+            "rafamadriz/friendly-snippets",
+        },
         "L3MON4D3/LuaSnip",
-        requires = { "rafamadriz/friendly-snippets" },         -- Optional: Predefined snippets
         config = function()
-            require("luasnip.loaders.from_vscode").lazy_load() -- Load VS Code-style snippets
-        end
-    })
-    use({
+            require("luasnip.loaders.from_vscode").lazy_load()
+        end,
+    },
+    {
         "windwp/nvim-ts-autotag",
+
         ft = {
             "javascript",
             "javascriptreact",
@@ -47,33 +81,38 @@ return require("packer").startup(function(use)
         config = function()
             require("nvim-ts-autotag").setup()
         end
-    })
-    use("saadparwaiz1/cmp_luasnip")
-    use("rafamadriz/friendly-snippets")
-    use("stevearc/conform.nvim")
-    use("lukas-reineke/indent-blankline.nvim")
-
-    use({
+    },
+    {
+        "saadparwaiz1/cmp_luasnip"
+    },
+    {
+        "rafamadriz/friendly-snippets"
+    },
+    {
+        "stevearc/conform.nvim"
+    },
+    {
+        "lukas-reineke/indent-blankline.nvim"
+    },
+    {
+        "neovim/nvim-lspconfig",
         "williamboman/mason.nvim",
         "williamboman/mason-lspconfig.nvim",
-        "neovim/nvim-lspconfig",
-    })
-    use({
+    },
+    {
+
         "nvim-telescope/telescope.nvim",
         tag = "0.1.4",
         requires = { { "nvim-lua/plenary.nvim" } },
-    })
-    use({
-        "akinsho/toggleterm.nvim",
-        tag = "*",
-        config = function()
-            require("toggleterm").setup()
-        end,
-    })
+    },
+    {
+        "ThePrimeagen/harpoon"
+    },
 
-    -- Automatically set up your configuration after cloning packer.nvim
-    -- Put this at the end after all plugins
-    if packer_bootstrap then
-        require("packer").sync()
-    end
-end)
+
+    -- Configure any other settings here. See the documentation for more details.
+    -- colorscheme that will be used when installing plugins.
+    -- install = { colorscheme = { "habamax" } },
+    -- automatically check for plugin updates
+    checker = { enabled = true },
+})
