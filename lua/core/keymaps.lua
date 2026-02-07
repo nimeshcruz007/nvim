@@ -1,4 +1,7 @@
 local opt = { noremap = true, silent = true }
+
+vim.opt.clipboard = "unnamedplus"
+
 vim.keymap.set("n", "<leader>w", ":w<CR>")
 -- Map <Esc> to <C-\><C-n> in terminal mode
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", opt)
@@ -25,3 +28,5 @@ vim.keymap.set("i", '"', '""<Esc>ha', { noremap = true })
 vim.keymap.set("i", "(", "()<Esc>ha", { noremap = true })
 vim.keymap.set("i", "'", "''<Esc>ha", { noremap = true })
 vim.keymap.set("i", "`", "``<Esc>ha", { noremap = true })
+
+vim.keymap.set("x", "<leader>p", "\"_dP")

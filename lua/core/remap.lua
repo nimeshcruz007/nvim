@@ -1,7 +1,10 @@
 vim.opt.nu = true
-vim.opt.relativenumber = true
+vim.opt.number = true
 vim.opt.scrolloff = 10
 vim.opt.cursorline = true
+
+vim.opt.foldmethod = manuel
+vim.opt.foldcolumn = "1"
 
 vim.opt.clipboard = "unnamedplus"
 
@@ -37,4 +40,13 @@ vim.o.swapfile = false
 -- Netrw global varible for the netrw plugin
 vim.g.netrw_keepdir = 0
 
-vim.cmd("colorscheme kanagawa-wave")
+-- vim.cmd("colorscheme kanagawa-wave")
+
+vim.opt.virtualedit = 'block';
+vim.opt.inccommand = "split";
+
+-- Remove default mappings
+vim.opt.smartcase = true
+vim.opt.ignorecase = true
+
+vim.opt.relativenumber = true

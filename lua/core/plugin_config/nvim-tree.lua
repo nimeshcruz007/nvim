@@ -27,10 +27,28 @@ local function my_on_attach(bufnr)
     vim.keymap.set("n", "x", api.fs.cut, opts("Cut"))
     vim.keymap.set("n", "<C-k>", api.node.show_info_popup, opts("Info"))
     vim.keymap.set("n", "<leader>f", api.tree.find_file, opts("Find File"))
+    vim.keymap.set("n", "<C-o>", api.node.open.tab, opts("Open: New Tab"))
+    vim.keymap.set("n", "f", api.live_filter.start, opts("Open: New Tab"))
+    vim.keymap.set("n", "F", api.live_filter.clear, opts("Open: New Tab"))
 end
+
+
 
 require("nvim-tree").setup {
     on_attach = my_on_attach,
+    git = {
+        enable = true,
+    },
+    view = {
+        float = {
+            enable = true,
+        },
+    },
+    renderer = {
+        indent_markers = {
+            enable = true,
+        }
+    }
 }
 
 vim.keymap.set('n', '<leader>e', ':NvimTreeFindFileToggle<CR>')
