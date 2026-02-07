@@ -48,3 +48,5 @@ vim.opt.inccommand = "split";
 -- Remove default mappings
 vim.opt.smartcase = true
 vim.opt.ignorecase = true
+
+vim.opt.relativenumber = true

@@ -15,12 +15,7 @@ require('lualine').setup {
         lualine_z = {}
     },
     tabline = {
-        lualine_a = {},
-        lualine_b = {},
-        lualine_c = {},
-        lualine_x = {},
-        lualine_y = {},
-        lualine_z = {
+        lualine_a = {
             {
                 'tabs',
                 mode = 2,
@@ -38,6 +33,11 @@ require('lualine').setup {
                     return filename
                 end,
             }
-        }
+        },
+        lualine_b = {},
+        lualine_c = {},
+        lualine_x = {},
+        lualine_y = {},
+        lualine_z = {}
     }
 }

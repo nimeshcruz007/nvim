@@ -29,6 +29,4 @@ vim.keymap.set("i", "(", "()<Esc>ha", { noremap = true })
 vim.keymap.set("i", "'", "''<Esc>ha", { noremap = true })
 vim.keymap.set("i", "`", "``<Esc>ha", { noremap = true })
 
-vim.keymap.set("n", "<leader>p", "\"_dP")
-
-vim.opt.relativenumber = true
+vim.keymap.set("x", "<leader>p", "\"_dP")
